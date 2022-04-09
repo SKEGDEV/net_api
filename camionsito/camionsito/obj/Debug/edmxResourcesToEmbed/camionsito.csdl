@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="camionsitoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ayudante">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre_completo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="DPI" Type="Int32" />
+    <Property Name="NIT" Type="Int32" />
+    <Property Name="edad" Type="Int32" />
+    <NavigationProperty Name="camions" Relationship="Self.ayudante_fk" FromRole="ayudante" ToRole="camion" />
+  </EntityType>
+  <EntityType Name="camion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="placas" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="km_por_lt" Type="Int32" />
+    <Property Name="capacidad_cc" Type="Double" />
+    <Property Name="departamento" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="tipo_carga" Type="Int32" />
+    <Property Name="estado" Type="Int32" />
+    <Property Name="id_conductor" Type="Int32" />
+    <Property Name="id_ayudante" Type="Int32" />
+    <NavigationProperty Name="ayudante" Relationship="Self.ayudante_fk" FromRole="camion" ToRole="ayudante" />
+    <NavigationProperty Name="viajes" Relationship="Self.camion_fk" FromRole="camion" ToRole="viaje" />
+    <NavigationProperty Name="conductor" Relationship="Self.conductor_fk" FromRole="camion" ToRole="conductor" />
+    <NavigationProperty Name="estado1" Relationship="Self.estado_fk" FromRole="camion" ToRole="estado" />
+    <NavigationProperty Name="tipo_carga1" Relationship="Self.tipo_carga_fk" FromRole="camion" ToRole="tipo_carga" />
+  </EntityType>
+  <EntityType Name="cliente">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="NIT" Type="Int32" />
+    <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="viajes" Relationship="Self.cliente_fk" FromRole="cliente" ToRole="viaje" />
+  </EntityType>
+  <EntityType Name="conductor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre_completo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="DPI" Type="Int32" />
+    <Property Name="NIT" Type="Int32" />
+    <Property Name="edad" Type="Int32" />
+    <NavigationProperty Name="camions" Relationship="Self.conductor_fk" FromRole="conductor" ToRole="camion" />
+  </EntityType>
+  <EntityType Name="destino">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="lugar" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="viajes" Relationship="Self.destino_fk" FromRole="destino" ToRole="viaje" />
+  </EntityType>
+  <EntityType Name="estado">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="estado1" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="camions" Relationship="Self.estado_fk" FromRole="estado" ToRole="camion" />
+  </EntityType>
+  <EntityType Name="origen">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="lugar" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="viajes" Relationship="Self.origen_fk" FromRole="origen" ToRole="viaje" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tipo_carga">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tipo_carga1" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="camions" Relationship="Self.tipo_carga_fk" FromRole="tipo_carga" ToRole="camion" />
+  </EntityType>
+  <EntityType Name="viaje">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_cliente" Type="Int32" />
+    <Property Name="id_camion" Type="Int32" />
+    <Property Name="lugar_salida" Type="Int32" />
+    <Property Name="lugar_llegada" Type="Int32" />
+    <Property Name="fecha_salida" Type="DateTime" Precision="0" />
+    <Property Name="fecha_llegada" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="camion" Relationship="Self.camion_fk" FromRole="viaje" ToRole="camion" />
+    <NavigationProperty Name="cliente" Relationship="Self.cliente_fk" FromRole="viaje" ToRole="cliente" />
+    <NavigationProperty Name="destino" Relationship="Self.destino_fk" FromRole="viaje" ToRole="destino" />
+    <NavigationProperty Name="origen" Relationship="Self.origen_fk" FromRole="viaje" ToRole="origen" />
+  </EntityType>
+  <Association Name="ayudante_fk">
+    <End Role="ayudante" Type="Self.ayudante" Multiplicity="0..1" />
+    <End Role="camion" Type="Self.camion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ayudante">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="camion">
+        <PropertyRef Name="id_ayudante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="camion_fk">
+    <End Role="camion" Type="Self.camion" Multiplicity="0..1" />
+    <End Role="viaje" Type="Self.viaje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="camion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="viaje">
+        <PropertyRef Name="id_camion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="conductor_fk">
+    <End Role="conductor" Type="Self.conductor" Multiplicity="0..1" />
+    <End Role="camion" Type="Self.camion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="conductor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="camion">
+        <PropertyRef Name="id_conductor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="estado_fk">
+    <End Role="estado" Type="Self.estado" Multiplicity="0..1" />
+    <End Role="camion" Type="Self.camion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="estado">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="camion">
+        <PropertyRef Name="estado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tipo_carga_fk">
+    <End Role="tipo_carga" Type="Self.tipo_carga" Multiplicity="0..1" />
+    <End Role="camion" Type="Self.camion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_carga">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="camion">
+        <PropertyRef Name="tipo_carga" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="cliente_fk">
+    <End Role="cliente" Type="Self.cliente" Multiplicity="0..1" />
+    <End Role="viaje" Type="Self.viaje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cliente">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="viaje">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="destino_fk">
+    <End Role="destino" Type="Self.destino" Multiplicity="0..1" />
+    <End Role="viaje" Type="Self.viaje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="destino">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="viaje">
+        <PropertyRef Name="lugar_llegada" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="origen_fk">
+    <End Role="origen" Type="Self.origen" Multiplicity="0..1" />
+    <End Role="viaje" Type="Self.viaje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="origen">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="viaje">
+        <PropertyRef Name="lugar_salida" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="camionsitoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ayudantes" EntityType="Self.ayudante" />
+    <EntitySet Name="camions" EntityType="Self.camion" />
+    <EntitySet Name="clientes" EntityType="Self.cliente" />
+    <EntitySet Name="conductors" EntityType="Self.conductor" />
+    <EntitySet Name="destinoes" EntityType="Self.destino" />
+    <EntitySet Name="estadoes" EntityType="Self.estado" />
+    <EntitySet Name="origens" EntityType="Self.origen" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="tipo_carga" EntityType="Self.tipo_carga" />
+    <EntitySet Name="viajes" EntityType="Self.viaje" />
+    <AssociationSet Name="ayudante_fk" Association="Self.ayudante_fk">
+      <End Role="ayudante" EntitySet="ayudantes" />
+      <End Role="camion" EntitySet="camions" />
+    </AssociationSet>
+    <AssociationSet Name="camion_fk" Association="Self.camion_fk">
+      <End Role="camion" EntitySet="camions" />
+      <End Role="viaje" EntitySet="viajes" />
+    </AssociationSet>
+    <AssociationSet Name="conductor_fk" Association="Self.conductor_fk">
+      <End Role="conductor" EntitySet="conductors" />
+      <End Role="camion" EntitySet="camions" />
+    </AssociationSet>
+    <AssociationSet Name="estado_fk" Association="Self.estado_fk">
+      <End Role="estado" EntitySet="estadoes" />
+      <End Role="camion" EntitySet="camions" />
+    </AssociationSet>
+    <AssociationSet Name="tipo_carga_fk" Association="Self.tipo_carga_fk">
+      <End Role="tipo_carga" EntitySet="tipo_carga" />
+      <End Role="camion" EntitySet="camions" />
+    </AssociationSet>
+    <AssociationSet Name="cliente_fk" Association="Self.cliente_fk">
+      <End Role="cliente" EntitySet="clientes" />
+      <End Role="viaje" EntitySet="viajes" />
+    </AssociationSet>
+    <AssociationSet Name="destino_fk" Association="Self.destino_fk">
+      <End Role="destino" EntitySet="destinoes" />
+      <End Role="viaje" EntitySet="viajes" />
+    </AssociationSet>
+    <AssociationSet Name="origen_fk" Association="Self.origen_fk">
+      <End Role="origen" EntitySet="origens" />
+      <End Role="viaje" EntitySet="viajes" />
+    </AssociationSet>
+    <FunctionImport Name="get_trucks" ReturnType="Collection(camionsitoModel.get_trucks_Result)" />
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(camionsitoModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(camionsitoModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="get_trucks_Result">
+    <Property Type="Int32" Name="id" Nullable="false" />
+    <Property Type="String" Name="placas" Nullable="true" MaxLength="30" />
+    <Property Type="Double" Name="capacidad_cc" Nullable="true" />
+    <Property Type="String" Name="departamento" Nullable="true" MaxLength="70" />
+    <Property Type="String" Name="estado" Nullable="true" MaxLength="40" />
+    <Property Type="Int32" Name="km_por_lt" Nullable="true" />
+    <Property Type="String" Name="conductor" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="ayudante" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="tipo_carga" Nullable="true" MaxLength="40" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

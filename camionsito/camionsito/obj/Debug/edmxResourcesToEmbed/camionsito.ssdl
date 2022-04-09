@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="camionsitoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ayudante">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_completo" Type="varchar" MaxLength="250" />
+    <Property Name="DPI" Type="int" />
+    <Property Name="NIT" Type="int" />
+    <Property Name="edad" Type="int" />
+  </EntityType>
+  <EntityType Name="camion">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="placas" Type="varchar" MaxLength="30" />
+    <Property Name="km_por_lt" Type="int" />
+    <Property Name="capacidad_cc" Type="float" />
+    <Property Name="departamento" Type="varchar" MaxLength="70" />
+    <Property Name="tipo_carga" Type="int" />
+    <Property Name="estado" Type="int" />
+    <Property Name="id_conductor" Type="int" />
+    <Property Name="id_ayudante" Type="int" />
+  </EntityType>
+  <EntityType Name="cliente">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="250" />
+    <Property Name="NIT" Type="int" />
+    <Property Name="direccion" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="conductor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_completo" Type="varchar" MaxLength="250" />
+    <Property Name="DPI" Type="int" />
+    <Property Name="NIT" Type="int" />
+    <Property Name="edad" Type="int" />
+  </EntityType>
+  <EntityType Name="destino">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="lugar" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="estado">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="estado" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="origen">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="lugar" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tipo_carga">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tipo_carga" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="viaje">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_cliente" Type="int" />
+    <Property Name="id_camion" Type="int" />
+    <Property Name="lugar_salida" Type="int" />
+    <Property Name="lugar_llegada" Type="int" />
+    <Property Name="fecha_salida" Type="date" />
+    <Property Name="fecha_llegada" Type="date" />
+  </EntityType>
+  <Association Name="ayudante_fk">
+    <End Role="ayudante" Type="Self.ayudante" Multiplicity="0..1" />
+    <End Role="camion" Type="Self.camion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ayudante">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="camion">
+        <PropertyRef Name="id_ayudante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="camion_fk">
+    <End Role="camion" Type="Self.camion" Multiplicity="0..1" />
+    <End Role="viaje" Type="Self.viaje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="camion">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="viaje">
+        <PropertyRef Name="id_camion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="cliente_fk">
+    <End Role="cliente" Type="Self.cliente" Multiplicity="0..1" />
+    <End Role="viaje" Type="Self.viaje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cliente">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="viaje">
+        <PropertyRef Name="id_cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="conductor_fk">
+    <End Role="conductor" Type="Self.conductor" Multiplicity="0..1" />
+    <End Role="camion" Type="Self.camion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="conductor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="camion">
+        <PropertyRef Name="id_conductor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="destino_fk">
+    <End Role="destino" Type="Self.destino" Multiplicity="0..1" />
+    <End Role="viaje" Type="Self.viaje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="destino">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="viaje">
+        <PropertyRef Name="lugar_llegada" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="estado_fk">
+    <End Role="estado" Type="Self.estado" Multiplicity="0..1" />
+    <End Role="camion" Type="Self.camion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="estado">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="camion">
+        <PropertyRef Name="estado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="origen_fk">
+    <End Role="origen" Type="Self.origen" Multiplicity="0..1" />
+    <End Role="viaje" Type="Self.viaje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="origen">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="viaje">
+        <PropertyRef Name="lugar_salida" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tipo_carga_fk">
+    <End Role="tipo_carga" Type="Self.tipo_carga" Multiplicity="0..1" />
+    <End Role="camion" Type="Self.camion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_carga">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="camion">
+        <PropertyRef Name="tipo_carga" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="get_trucks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="camionsitoModelStoreContainer">
+    <EntitySet Name="ayudante" EntityType="Self.ayudante" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="camion" EntityType="Self.camion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="conductor" EntityType="Self.conductor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="destino" EntityType="Self.destino" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="estado" EntityType="Self.estado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="origen" EntityType="Self.origen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tipo_carga" EntityType="Self.tipo_carga" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="viaje" EntityType="Self.viaje" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="ayudante_fk" Association="Self.ayudante_fk">
+      <End Role="ayudante" EntitySet="ayudante" />
+      <End Role="camion" EntitySet="camion" />
+    </AssociationSet>
+    <AssociationSet Name="camion_fk" Association="Self.camion_fk">
+      <End Role="camion" EntitySet="camion" />
+      <End Role="viaje" EntitySet="viaje" />
+    </AssociationSet>
+    <AssociationSet Name="cliente_fk" Association="Self.cliente_fk">
+      <End Role="cliente" EntitySet="cliente" />
+      <End Role="viaje" EntitySet="viaje" />
+    </AssociationSet>
+    <AssociationSet Name="conductor_fk" Association="Self.conductor_fk">
+      <End Role="conductor" EntitySet="conductor" />
+      <End Role="camion" EntitySet="camion" />
+    </AssociationSet>
+    <AssociationSet Name="destino_fk" Association="Self.destino_fk">
+      <End Role="destino" EntitySet="destino" />
+      <End Role="viaje" EntitySet="viaje" />
+    </AssociationSet>
+    <AssociationSet Name="estado_fk" Association="Self.estado_fk">
+      <End Role="estado" EntitySet="estado" />
+      <End Role="camion" EntitySet="camion" />
+    </AssociationSet>
+    <AssociationSet Name="origen_fk" Association="Self.origen_fk">
+      <End Role="origen" EntitySet="origen" />
+      <End Role="viaje" EntitySet="viaje" />
+    </AssociationSet>
+    <AssociationSet Name="tipo_carga_fk" Association="Self.tipo_carga_fk">
+      <End Role="tipo_carga" EntitySet="tipo_carga" />
+      <End Role="camion" EntitySet="camion" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

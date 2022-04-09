@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ec2458c2a4e54d85881cec063131dc56" Name="Diagram1">
+        <EntityTypeShape EntityType="camionsitoModel.ayudante" Width="2" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="camionsitoModel.camion" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="camionsitoModel.cliente" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="camionsitoModel.conductor" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="camionsitoModel.destino" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="camionsitoModel.estado" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="camionsitoModel.origen" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="camionsitoModel.sysdiagram" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="camionsitoModel.tipo_carga" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="camionsitoModel.viaje" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="camionsitoModel.ayudante_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="camionsitoModel.camion_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="camionsitoModel.conductor_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="camionsitoModel.estado_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="camionsitoModel.tipo_carga_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="camionsitoModel.cliente_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="camionsitoModel.destino_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="camionsitoModel.origen_fk" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
